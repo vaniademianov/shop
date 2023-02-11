@@ -20,6 +20,30 @@
           <a href="#" class="btn btn-primary" id="1s">Додати в кошик</a>
         </div>
       </div>
+      <div class="card" style="width: 18rem;">
+        <img src="" id="cardimg2" class="card-img-top" alt="">
+        <div class="card-body">
+          <h5 class="card-title" id="2title"></h5>
+          <p class="card-text" id="2t"></p>
+          <a href="#" class="btn btn-primary" id="2s">Додати в кошик</a>
+        </div>
+      </div>
+      <div class="card" style="width: 18rem;">
+        <img src="" id="cardimg3" class="card-img-top" alt="">
+        <div class="card-body">
+          <h5 class="card-title" id="3title"></h5>
+          <p class="card-text" id="3t"></p>
+          <a href="#" class="btn btn-primary" id="3s">Додати в кошик</a>
+        </div>
+      </div>
+      <div class="card" style="width: 18rem;">
+        <img src="" id="cardimg4" class="card-img-top" alt="">
+        <div class="card-body">
+          <h5 class="card-title" id="4title"></h5>
+          <p class="card-text" id="4t"></p>
+          <a href="#" class="btn btn-primary" id="4s">Додати в кошик</a>
+        </div>
+      </div>
       <script>
         fetch('https://shops-vanushademvit-gmailcom.vercel.app/describe_element/1/')
         .then((response) => {
@@ -30,6 +54,45 @@
         document.getElementById("1title").innerHTML = data[0]
         document.getElementById("1t").innerHTML = data[1]
         document.getElementById("cardimg").src="/static/"+data[2];
+        });
+        
+      </script>
+      <script>
+        fetch('https://shops-vanushademvit-gmailcom.vercel.app/describe_element/2/')
+        .then((response) => {
+        return response.json();
+        })
+        .then((data) => {
+        console.log(data);
+        document.getElementById("2title").innerHTML = data[0]
+        document.getElementById("2t").innerHTML = data[1]
+        document.getElementById("cardimg2").src="/static/"+data[2];
+        });
+        
+      </script>
+      <script>
+        fetch('https://shops-vanushademvit-gmailcom.vercel.app/describe_element/3/')
+        .then((response) => {
+        return response.json();
+        })
+        .then((data) => {
+        console.log(data);
+        document.getElementById("3title").innerHTML = data[0]
+        document.getElementById("3t").innerHTML = data[1]
+        document.getElementById("cardimg3").src="/static/"+data[2];
+        });
+        
+      </script>
+      <script>
+        fetch('https://shops-vanushademvit-gmailcom.vercel.app/describe_element/4/')
+        .then((response) => {
+        return response.json();
+        })
+        .then((data) => {
+        console.log(data);
+        document.getElementById("4title").innerHTML = data[0]
+        document.getElementById("4t").innerHTML = data[1]
+        document.getElementById("cardimg4").src="/static/"+data[2];
         });
         
       </script>
