@@ -11,5 +11,25 @@
 </head>
 <body style="background-color: dimgrey;">
     <h1 style="color: violet;" class="text-center">Вітаємо в магазині АТБ</h1>
+    <h1 style="color: palevioletred;" class="text-center">Наші товари: </h1>
+    <div class="card" style="width: 18rem;">
+        <img src="" class="card-img-top" alt="">
+        <div class="card-body">
+          <h5 class="card-title" id="1title"></h5>
+          <p class="card-text" id="1t"></p>
+          <a href="#" class="btn btn-primary" id="1s">Додати в кошик</a>
+        </div>
+      </div>
+      <script>
+        fetch('http://')
+        .then((response) => {
+        return response.json();
+        })
+        .then((data) => {
+        console.log(data);
+        document.getElementById("1title").innerHTML = data[]
+        });
+        
+      </script>
 </body>
 </html>
