@@ -45,6 +45,54 @@
           <a href="#" class="btn btn-primary" id="4s">Додати в кошик</a>
         </div>
       </div>
+      <div class="card" style="width: 18rem;">
+        <img src="" id="cardimg5" class="card-img-top" alt="">
+        <div class="card-body">
+          <h5 class="card-title" id="5title"></h5>
+          <p class="card-text" id="5t"></p>
+          <a href="#" class="btn btn-primary" id="5s">Додати в кошик</a>
+        </div>
+      </div>
+      <div class="card" style="width: 18rem;">
+        <img src="" id="cardimg6" class="card-img-top" alt="">
+        <div class="card-body">
+          <h5 class="card-title" id="6title"></h5>
+          <p class="card-text" id="6t"></p>
+          <a href="#" class="btn btn-primary" id="6s">Додати в кошик</a>
+        </div>
+      </div>
+      <div class="card" style="width: 18rem;">
+        <img src="" id="cardimg7" class="card-img-top" alt="">
+        <div class="card-body">
+          <h5 class="card-title" id="7title"></h5>
+          <p class="card-text" id="7t"></p>
+          <a href="#" class="btn btn-primary" id="7s">Додати в кошик</a>
+        </div>
+      </div>
+      <div class="card" style="width: 18rem;">
+        <img src="" id="cardimg8" class="card-img-top" alt="">
+        <div class="card-body">
+          <h5 class="card-title" id="8title"></h5>
+          <p class="card-text" id="8t"></p>
+          <a href="#" class="btn btn-primary" id="8s">Додати в кошик</a>
+        </div>
+      </div>
+      <div class="card" style="width: 18rem;">
+        <img src="" id="cardimg9" class="card-img-top" alt="">
+        <div class="card-body">
+          <h5 class="card-title" id="9title"></h5>
+          <p class="card-text" id="9t"></p>
+          <a href="#" class="btn btn-primary" id="9s">Додати в кошик</a>
+        </div>
+      </div>
+      <div class="card" style="width: 18rem;">
+        <img src="" id="cardimg10" class="card-img-top" alt="">
+        <div class="card-body">
+          <h5 class="card-title" id="10title"></h5>
+          <p class="card-text" id="10t"></p>
+          <a href="#" class="btn btn-primary" id="10s">Додати в кошик</a>
+        </div>
+      </div>
     </div>
       <script>
         fetch('https://shops-vanushademvit-gmailcom.vercel.app/describe_element/1/')
@@ -95,6 +143,85 @@
         document.getElementById("4title").innerHTML = data[0]
         document.getElementById("4t").innerHTML = data[1]
         document.getElementById("cardimg4").src="/static/"+data[2];
+        });
+        
+      </script>
+      <script>
+        fetch('https://shops-vanushademvit-gmailcom.vercel.app/describe_element/5/')
+        .then((response) => {
+        return response.json();
+        })
+        .then((data) => {
+        console.log(data);
+        document.getElementById("5title").innerHTML = data[0]
+        document.getElementById("5t").innerHTML = data[1]
+        document.getElementById("cardimg5").src="/static/"+data[2];
+        });
+        
+      </script>
+      <script>
+        fetch('https://shops-vanushademvit-gmailcom.vercel.app/describe_element/6/')
+        .then((response) => {
+        return response.json();
+        })
+        .then((data) => {
+        console.log(data);
+        document.getElementById("6title").innerHTML = data[0]
+        document.getElementById("6t").innerHTML = data[1]
+        document.getElementById("cardimg6").src="/static/"+data[2];
+        });
+        
+      </script>
+      <script>
+        fetch('https://shops-vanushademvit-gmailcom.vercel.app/describe_element/7/')
+        .then((response) => {
+        return response.json();
+        })
+        .then((data) => {
+        console.log(data);
+        document.getElementById("7title").innerHTML = data[0]
+        document.getElementById("7t").innerHTML = data[1]
+        document.getElementById("cardimg7").src="/static/"+data[2];
+        });
+        
+      </script>
+      <script>
+        fetch('https://shops-vanushademvit-gmailcom.vercel.app/describe_element/8/')
+        .then((response) => {
+        return response.json();
+        })
+        .then((data) => {
+        console.log(data);
+        document.getElementById("8title").innerHTML = data[0]
+        document.getElementById("8t").innerHTML = data[1]
+        document.getElementById("cardimg8").src="/static/"+data[2];
+        });
+        
+
+      </script>
+      <script>
+        fetch('https://shops-vanushademvit-gmailcom.vercel.app/describe_element/9/')
+        .then((response) => {
+        return response.json();
+        })
+        .then((data) => {
+        console.log(data);
+        document.getElementById("9title").innerHTML = data[0]
+        document.getElementById("9t").innerHTML = data[1]
+        document.getElementById("cardimg9").src="/static/"+data[2];
+        });
+        
+      </script>
+      <script>
+        fetch('https://shops-vanushademvit-gmailcom.vercel.app/describe_element/10/')
+        .then((response) => {
+        return response.json();
+        })
+        .then((data) => {
+        console.log(data);
+        document.getElementById("10title").innerHTML = data[0]
+        document.getElementById("10t").innerHTML = data[1]
+        document.getElementById("cardimg10").src="/static/"+data[2];
         });
         
       </script>
