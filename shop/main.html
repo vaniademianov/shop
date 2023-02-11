@@ -21,13 +21,14 @@
         </div>
       </div>
       <script>
-        fetch('http://')
+        fetch('http://hops-nu.vercel.app/describe_element/1/')
         .then((response) => {
         return response.json();
         })
         .then((data) => {
         console.log(data);
-        document.getElementById("1title").innerHTML = data[]
+        document.getElementById("1title").innerHTML = data[0]
+        document.getElementById("1t").innerHTML = data[1]
         });
         
       </script>
