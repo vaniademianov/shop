@@ -13,7 +13,7 @@
     <h1 style="color: violet;" class="text-center">Вітаємо в магазині АТБ</h1>
     <h1 style="color: palevioletred;" class="text-center">Наші товари: </h1>
     <div class="card" style="width: 18rem;">
-        <img src="" class="card-img-top" alt="">
+        <img src="" id="cardimg" class="card-img-top" alt="">
         <div class="card-body">
           <h5 class="card-title" id="1title"></h5>
           <p class="card-text" id="1t"></p>
@@ -21,7 +21,7 @@
         </div>
       </div>
       <script>
-        fetch('https://shops-vanushademvit-gmailcom.vercel.app/describe_element/1/')
+        fetch('https://shops-vanushademvit-gmailcom.vercel.app:5000/describe_element/1/')
         .then((response) => {
         return response.json();
         })
@@ -29,6 +29,7 @@
         console.log(data);
         document.getElementById("1title").innerHTML = data[0]
         document.getElementById("1t").innerHTML = data[1]
+        document.getElementById("cardimg").src="/static"+data[2];
         });
         
       </script>
