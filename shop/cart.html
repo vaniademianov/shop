@@ -11,7 +11,7 @@
 <body style="background-color: rgb(156, 179, 179);">
     <H1 class="text-center" style="color: aquamarine;">Вітаємо в кошику!</H1>
     <H3 class="text-center" style="color:aqua;" id="money">Тут товарів на грн</H1>
-        <div style="position:absolute; top:0; left:0;"><a href="https://remoteaccess01.pythonanywhere.com/clear_cart/"><button type="submit">
+        <div style="position:absolute; top:0; left:0;"><a href="https://remoteaccess01.pythonanywhere.com/clear_cart/?after=shop/cart"><button type="submit">
             <img width="40px" src="https://cdn-icons-png.flaticon.com/512/8339/8339238.png" alt="buttonpng"/>
           </button></a></div>
         <div style="position:absolute; top:0; right:0;"><a href="/shop/main"><button type="submit">
@@ -41,7 +41,7 @@
                 console.log(data2[3])
                 var div = document.getElementById("dv")
                 console.log("for number " + i)
-                div.innerHTML += "<div class='card' style='width: 18rem;'><img src='/static/" + data2[2] +" ' id='cardimg' class='card-img-top' alt=''><div class='card-body'><h5 class='card-title' id='1title'>"+data2[0]+"</h5><p class='card-text' id='1t'>"+data2[1]+" грн </p><a href='https://remoteaccess01.pythonanywhere.com/add_tov/" + data2[3] +"/?after=shop/cart/' class='btn btn-primary' id='1s'>Додати ще одну одиницю</a><a href='https://remoteaccess01.pythonanywhere.com/delete_tov/" + data2[3] +"/' class='btn btn-danger' id='1s'>Видалити з кошика</a></div></div>";
+                div.innerHTML += "<div class='card' style='width: 18rem;'><img src='/static/" + data2[2] +" ' id='cardimg' class='card-img-top' alt=''><div class='card-body'><h5 class='card-title' id='1title'>"+data2[0]+"</h5><p class='card-text' id='1t'>"+data2[1]+" грн </p><a href='https://remoteaccess01.pythonanywhere.com/add_tov/" + data2[3] +"/?after=shop/cart' class='btn btn-primary' id='1s'>Додати ще одну одиницю</a><a href='https://remoteaccess01.pythonanywhere.com/delete_tov/" + data2[3] +"/?after=shop/cart' class='btn btn-danger' id='1s'>Видалити з кошика</a></div></div>";
                 // ts+=data2[1]
             });
             i++;
