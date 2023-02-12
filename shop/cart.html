@@ -28,8 +28,9 @@
         .then((data) => {
         console.log(data);
         var ts = 0;
-        for (var i = 0; i<Object.keys(data).length; i++) {
-            console.log("for here")
+        var i = 0;
+        while (i<Object.keys(data).length) {
+            console.log("for here " + i)
             fetch('https://remoteaccess01.pythonanywhere.com/describe_element/' + data[i] +'/')
             .then((response3) => {
                 return response3.json();
@@ -38,9 +39,11 @@
             .then((data2) => {
                 console.log("adding")
                 var div = document.getElementById("dv")
-                div.innerHTML += "<div class='card' style='width: 18rem;'><img src='/static/" + data2[2] +" ' id='cardimg' class='card-img-top' alt=''><div class='card-body'><h5 class='card-title' id='1title'>"+data2[0]+"</h5><p class='card-text' id='1t'>"+data2[1]+" грн </p><a href='https://remoteaccess01.pythonanywhere.com/add_tov/" + data[i] +"/' class='btn btn-primary' id='1s'>Додати ще одну одиницю</a><a href='https://remoteaccess01.pythonanywhere.com/delete_tov/" + data[i] +"/' class='btn btn-danger' id='1s'>Видалити з кошика</a></div></div>";
+                console.log("for number " + i)
+                div.innerHTML += "<div class='card' style='width: 18rem;'><img src='/static/" + data2[2] +" ' id='cardimg' class='card-img-top' alt=''><div class='card-body'><h5 class='card-title' id='1title'>"+data2[0]+"</h5><p class='card-text' id='1t'>"+data2[1]+" грн </p><a href='https://remoteaccess01.pythonanywhere.com/add_tov/" + data[3] +"/' class='btn btn-primary' id='1s'>Додати ще одну одиницю</a><a href='https://remoteaccess01.pythonanywhere.com/delete_tov/" + data[3] +"/' class='btn btn-danger' id='1s'>Видалити з кошика</a></div></div>";
                 // ts+=data2[1]
             });
+            i++;
                     }
                 
         });
