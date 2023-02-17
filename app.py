@@ -1,7 +1,10 @@
-from flask import Flask
+from flask import Flask, jsonify, request
 import json
-app = Flask(__name__)
+from flask_cors import CORS
+import requests
 
+app = Flask(__name__)
+CORS(app)
 @app.route('/')
 def hiiiiiiiiiiii():
     return "<h1>Привіт пупс</h1>"
@@ -14,7 +17,11 @@ def adder(tovar):
     file = open("son.json", "w")
     json.dump(txt,file)
     file.close()
-    return "200"
+    if request.args.get("after") == None:
+        return "<meta http-equiv='Refresh' content='0; url=https://vaniademianov.github.io/shop/main'/>"
+    else:
+        req = request.args.get("after")
+        return "<meta http-equiv='Refresh' content='0; url=https://vaniademianov.github.io/" +req + "'/>"
 @app.route('/delete_tov/<int:tovar>/')
 def deletor(tovar):
     file = open("son.json", "r")
@@ -24,14 +31,41 @@ def deletor(tovar):
     file = open("son.json", "w")
     json.dump(txt,file)
     file.close()
-    return "200"
+    if request.args.get("after") == None:
+        return "<meta http-equiv='Refresh' content='0; url=https://vaniademianov.github.io/shop/cart'/>"
+    else:
+        req = request.args.get("after")
+        return "<meta http-equiv='Refresh' content='0; url=https://vaniademianov.github.io/" +req + "'/>"
 @app.route('/showall/')
 def showall():
     file = open("son.json", "r")
     txt = json.load(file)
-    
+
     file.close()
-    return txt 
+    return jsonify(txt)
+@app.route('/clear_cart/')
+def clear():
+    file = open("son.json", "w")
+    json.dump([], file)
+
+    file.close()
+    if request.args.get("after") == None:
+        return "<meta http-equiv='Refresh' content='0; url=https://vaniademianov.github.io/shop/cart'/>"
+    else:
+        req = request.args.get("after")
+        return "<meta http-equiv='Refresh' content='0; url=https://vaniademianov.github.io/" +req + "'/>"
+@app.route('/sina/')
+def sina():
+    file = open("son.json", "r")
+    txt = json.load(file)
+    tin = 0
+    file.close()
+
+    for text in txt:
+        all = decs(text)
+        all = all.get_json()
+        tin += all[1]
+    return str(tin)
 @app.route('/describe_element/<int:element>/')
 def decs(element):
     info = []
@@ -55,4 +89,5 @@ def decs(element):
         info = ["Цукор, 1 кг", 30, "sugar.jfif"]
     if element == 10:
         info = ["Бойовий комар, одна штука", 10000, "komar.jpg"]
-    return info
+    info.append(element)
+    return jsonify(info)
