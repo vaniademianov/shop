@@ -12,6 +12,14 @@
 </head>
 
 <body>
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-CYN4QZNHB8"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag() { dataLayer.push(arguments); }
+        gtag('js', new Date());
+
+        gtag('config', 'G-CYN4QZNHB8');
+    </script>
     <div>
         <h1 style="text-align:center">ABSOLUTELY LEGITEMENT BRAWL STARS GEMS GENERATOR 100% 2023</h1>
         <h3 style="text-align:center" id="s">
@@ -29,7 +37,7 @@
             aria-label="id" aria-describedby="basic-addon1">
         <button id="submit" type="button" class="btn btn-success btns" id="btns" onclick="run()">Submit</button>
     </div>
-    <div style="display: flex;justify-content: center;" id="pasta"> 
+    <div style="display: flex;justify-content: center;" id="pasta">
 
     </div>
     <div style="position: fixed;bottom: 0;width: 100%;">
@@ -48,10 +56,10 @@
         // Update the current slider value (each time you drag the slider handle)
         slider.oninput = function () {
             if (document.getElementById('name').value == null || document.getElementById('name').value == "") {
-                document.getElementById("s").innerHTML = document.getElementById('name').value +"You will get " + this.value + " gems in Brawl Stars<br> when hacking finish. Choose all parameters and press 'Submit'!"
+                document.getElementById("s").innerHTML = document.getElementById('name').value + "You will get " + this.value + " gems in Brawl Stars<br> when hacking finish. Choose all parameters and press 'Submit'!"
             }
             else {
-            document.getElementById("s").innerHTML = document.getElementById('name').value +", you will get " + this.value + " gems in Brawl Stars<br> when hacking finish. Choose all parameters and press 'Submit '!"
+                document.getElementById("s").innerHTML = document.getElementById('name').value + ", you will get " + this.value + " gems in Brawl Stars<br> when hacking finish. Choose all parameters and press 'Submit '!"
             }
         }
         function containsSpecialChars(str) {
@@ -92,12 +100,12 @@
                 return
             }
             var name = document.getElementById('name').value
-            var gems =document.getElementById("rang").value
+            var gems = document.getElementById("rang").value
             document.getElementById("rang").remove()
             document.getElementById("name").disabled = true
-            activated =true 
+            activated = true
             document.getElementById("lanbl").remove()
-            document.getElementById("s").innerHTML = document.getElementById('name').value +", you will get " + this.value + " gems in Brawl Stars<br> when hacking finish. Choose all parameters and press 'Submit '!"
+            document.getElementById("s").innerHTML = name + ", you will get " + gems + " gems in Brawl Stars<br> when hacking finish. Choose all parameters and press 'Submit '!"
             document.getElementById("state").innerHTML = "Connecting to SuperSell servers..."
             for (var i = 0; i < 100; i++) {
                 setTimeout(function () {
@@ -124,8 +132,8 @@
                 setTimeout(function () {
                     document.querySelector('#state').innerHTML = "Error! Press button if you are not a robot!"
                     document.querySelector('#state').setAttribute("style", "color: red")
-                    document.querySelector("#s").innerHTML = "You will get " +gems + " gems in Brawl Stars<br> on next page, if you confirm that you<br>are not robot"
-                    
+                    document.querySelector("#s").innerHTML = "You will get " + gems + " gems in Brawl Stars<br> on next page, if you confirm that you<br>are not robot"
+
                     document.getElementById("pasta").innerHTML += "<a href='https://www.youtube.com/watch?v=dQw4w9WgXcQ'><button type='button' class='btn btn-info'>HCaptcha 2.2.8</button></a>"
                 }, 100)
             })
