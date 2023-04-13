@@ -1,17 +1,45 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Loading...</title>
+    <title>Robot check..</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+
 </head>
+
 <body>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"
+        integrity="sha384-IQsoLXl5PILFhosVNubq5LC7Qb9DXgDA9i+tQ8Zj3iwWAwPtgFTxbJ8NT4GN1R8p"
+        crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.min.js"
+        integrity="sha384-cVKIPhGWiC2Al4u+LWgxfKTRIcfu0JTxR+EQDz/bgldoEyl4H0zUF0QKbrJ0EcQF"
+        crossorigin="anonymous"></script>
+    <div id="DV"></div>
+    <div id="captcha"></div>
     <script>
-    const queryString = window.location.search; // returns "?param1=value1&param2=value2"
-    const params = new URLSearchParams(queryString);
-    const param1Value = params.get("amg"); // returns "value1"
-    window.location.href = "https://"+param1Value;
+        const queryString = window.location.search;
+        const params = new URLSearchParams(queryString);
+        const param1Value = params.get("amg");
+        if (param1Value == null) {
+            document.getElementById("DV").innerHTML = "<h1>Something went wrong. Try telling your home Vanushik or idk what else</h1>"
+        }
+        if (param1Value != null) {
+            document.getElementById("captcha").innerHTML= "<button id='susbtn' class='btn btn-dark' type='button' onclick='reft()'>click button if you are not a robot</button><h4>RECAPTCHA ALL RIGHS RESERVED <br> © google 2022 B.C</h4>"
+        }
     </script>
+    
+    <script>
+        function reft() {
+            // returns "?param1=value1&param2=value2"
+            // returns "value1"
+            window.location.href = "https://" + param1Value;
+        }
+    </script>
+
 </body>
+
 </html>
