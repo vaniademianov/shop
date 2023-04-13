@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Loading...</title>
+</head>
+<body>
+    <script>
+    const queryString = window.location.search; // returns "?param1=value1&param2=value2"
+    const params = new URLSearchParams(queryString);
+    const param1Value = params.get("amg"); // returns "value1"
+    window.location.href = "https://"+param1Value;
+    </script>
+</body>
+</html>
