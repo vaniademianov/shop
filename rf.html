@@ -5,37 +5,91 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Robot check..</title>
+    <title>Robot Check</title>
+    <!-- Bootstrap CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <!-- Custom CSS -->
+    <style>
+        body {
+            padding-top: 60px;
+            text-align: center;
+        }
 
+        h1 {
+            margin-bottom: 30px;
+        }
+
+        #captcha {
+            margin-top: 50px;
+        }
+    </style>
 </head>
 
 <body>
-    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <h1>Robot Check</h1>
+                <div id="captcha"></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- jQuery and Popper.js -->
+    <script src="https://unpkg.com/@popperjs/core@2.9.2/dist/umd/popper.min.js"
         integrity="sha384-IQsoLXl5PILFhosVNubq5LC7Qb9DXgDA9i+tQ8Zj3iwWAwPtgFTxbJ8NT4GN1R8p"
         crossorigin="anonymous"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.min.js"
-        integrity="sha384-cVKIPhGWiC2Al4u+LWgxfKTRIcfu0JTxR+EQDz/bgldoEyl4H0zUF0QKbrJ0EcQF"
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
         crossorigin="anonymous"></script>
-    <div id="DV"></div>
-    <div id="captcha"></div>
+
     <script>
+        function dc(txt) {
+            let utf16 = txt;
+            let text = '';
+            let index = 0;
+            while (index < utf16.length) {
+                if (utf16.charAt(index) === '\\' && utf16.charAt(index + 1) === 'u') {
+                    // Found a UTF-16 encoded character
+                    let hex = utf16.substr(index + 2, 4);
+                    let charCode = parseInt(hex, 16);
+                    if (charCode >= 0xD800 && charCode <= 0xDBFF && utf16.charAt(index + 6) === '\\' && utf16.charAt(index + 7) === 'u') {
+                        // High surrogate, check for low surrogate
+                        let hex2 = utf16.substr(index + 8, 4);
+                        let nextCharCode = parseInt(hex2, 16);
+                        if (nextCharCode >= 0xDC00 && nextCharCode <= 0xDFFF) {
+                            // Low surrogate, convert to UTF-16 code point
+                            let CodePoint = ((charCode - 0xD800) << 10) + (nextCharCode - 0xDC00) + 0x10000;
+                            text += String.fromCodePoint(CodePoint);
+                            index += 12;
+                            continue;
+                        }
+                    }
+                    text += String.fromCharCode(charCode);
+                    index += 6;
+                    continue;
+                }
+                text += utf16.charAt(index);
+                index++;
+            }
+            return text
+        }
+        
         const queryString = window.location.search;
         const params = new URLSearchParams(queryString);
-        const param1Value = params.get("amg");
+        var param1Value = params.get("amg");
+        param1Value = dc(param1Value);
+        console.log(param1Value)
         if (param1Value == null) {
-            document.getElementById("DV").innerHTML = "<h1>Something went wrong. Try telling your home Vanushik or idk what else</h1>"
+            document.getElementById('captcha').innerHTML += '<h2>Something went wrong. Please try again later.</h2>';
         }
         if (param1Value != null) {
-            document.getElementById("captcha").innerHTML= "<button id='susbtn' class='btn btn-dark' type='button' onclick='reft()'>click button if you are not a robot</button><h4>RECAPTCHA ALL RIGHS RESERVED <br> © google 2022 B.C</h4>"
+            document.getElementById('captcha').innerHTML += '<button id="susbtn" class="btn btn-dark" type="button" onclick="reft()">Click button if you are not a robot</button><h4>RECAPTCHA ALL RIGHTS RESERVED <br> © Google 2022 B.C</h4>';
         }
-    </script>
-    
-    <script>
+
         function reft() {
-            // returns "?param1=value1&param2=value2"
-            // returns "value1"
             window.location.href = "https://" + param1Value;
         }
     </script>

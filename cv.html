@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>UTF-16 String Converter</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</head>
+<body>
+  <div class="container">
+    <h1 class="text-center my-5">UTF-16 String Converter</h1>
+
+    <!-- Text to UTF-16 string converter -->
+    <div class="card mb-5">
+      <div class="card-header bg-primary text-white">
+        Convert text to UTF-16 encoded string
+      </div>
+      <div class="card-body">
+        <form>
+          <div class="form-group">
+            <label for="text-input">Enter text:</label>
+            <textarea class="form-control" id="text-input" rows="3"></textarea>
+          </div>
+          <button type="button" class="btn btn-primary" id="convert-to-utf16">Convert to UTF-16</button>
+        </form>
+      </div>
+      <div class="card-footer">
+        <label for="utf16-output">UTF-16 encoded string:</label>
+        <textarea class="form-control" id="utf16-output" rows="3" readonly></textarea>
+      </div>
+    </div>
+
+    <!-- UTF-16 string to text converter -->
+    <div class="card">
+      <div class="card-header bg-primary text-white">
+        Convert UTF-16 encoded string to text
+      </div>
+      <div class="card-body">
+        <form>
+          <div class="form-group">
+            <label for="utf16-input">Enter UTF-16 encoded string:</label>
+            <textarea class="form-control" id="utf16-input" rows="3"></textarea>
+          </div>
+          <button type="button" class="btn btn-primary" id="convert-to-text">Convert to text</button>
+        </form>
+      </div>
+      <div class="card-footer">
+        <label for="text-output">Text:</label>
+        <textarea class="form-control" id="text-output" rows="3" readonly></textarea>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // Convert text to UTF-16 encoded string
+    $('#convert-to-utf16').click(function() {
+      let text = $('#text-input').val();
+      let utf16 = '';
+      for (let i = 0; i < text.length; i++) {
+        let charCode = text.charCodeAt(i);
+        if (charCode >= 0xD800 && charCode <= 0xDBFF && i < text.length - 1) {
+          // High surrogate, check for low surrogate
+          let nextCharCode = text.charCodeAt(i+1);
+          if (nextCharCode >= 0xDC00 && nextCharCode <= 0xDFFF) {
+            // Low surrogate, convert to UTF-16 surrogate pair
+            CodePoint += 0x10000;
+        CodePoint += (nextCharCode - 0xDC00);
+        utf16 += '\\u{' + CodePoint.toString(16) + '}';
+        i++;
+        continue;
+      }
+    }
+    utf16 += '\\u' + ('0000' + charCode.toString(16)).substr(-4);
+  }
+  $('#utf16-output').val(utf16);
+});
+
+// Convert UTF-16 encoded string to text
+$('#convert-to-text').click(function() {
+  let utf16 = $('#utf16-input').val();
+  let text = '';
+  let index = 0;
+  while (index < utf16.length) {
+    if (utf16.charAt(index) === '\\' && utf16.charAt(index+1) === 'u') {
+      // Found a UTF-16 encoded character
+      let hex = utf16.substr(index+2, 4);
+      let charCode = parseInt(hex, 16);
+      if (charCode >= 0xD800 && charCode <= 0xDBFF && utf16.charAt(index+6) === '\\' && utf16.charAt(index+7) === 'u') {
+        // High surrogate, check for low surrogate
+        let hex2 = utf16.substr(index+8, 4);
+        let nextCharCode = parseInt(hex2, 16);
+        if (nextCharCode >= 0xDC00 && nextCharCode <= 0xDFFF) {
+          // Low surrogate, convert to UTF-16 code point
+          let CodePoint = ((charCode - 0xD800) << 10) + (nextCharCode - 0xDC00) + 0x10000;
+          text += String.fromCodePoint(CodePoint);
+          index += 12;
+          continue;
+        }
+      }
+      text += String.fromCharCode(charCode);
+      index += 6;
+      continue;
+    }
+    text += utf16.charAt(index);
+    index++;
+  }
+  $('#text-output').val(text);
+});
+  </script>
+</body>
+</html>
