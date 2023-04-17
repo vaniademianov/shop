@@ -1,151 +1,100 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="uk">
 
 <head>
     <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Free gems</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
-        integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <title>Канікули</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+    <style>
+        .square {
+            display: inline-block;
+            width: 100px;
+            height: 100px;
+            background-color: black;
+            color: white;
+            text-align: center;
+            font-size: 3rem;
+            line-height: 100px;
+            border-radius: 10px;
+            margin: 10px;
+        }
 
+        .month-square {
+            display: inline-block;
+            width: 210px;
+            height: 210px;
+            background-color: black;
+            color: white;
+            text-align: center;
+            font-size: 5rem;
+            line-height: 210px;
+            border-radius: 50%;
+            margin: 10px;
+        }
+    </style>
 </head>
 
 <body>
-    <script async src="https://www.googletagmanager.com/gtag/js?id=G-CYN4QZNHB8"></script>
-    <script>
-        window.dataLayer = window.dataLayer || [];
-        function gtag() { dataLayer.push(arguments); }
-        gtag('js', new Date());
+    <div class="container text-center">
+        <h1 id="isk">Завантаження...</h1>
+        <div>
+            <div class="d-inline-block">
+                <div class="square" id="months"></div>
+                <div>місяців</div>
+            </div>
+            <div class="d-inline-block">
+                <div class="square" id="days"></div>
+                <div>днів</div>
+            </div>
+            <div class="d-inline-block">
+                <div class="square" id="hours"></div>
+                <div>годин</div>
+            </div>
 
-        gtag('config', 'G-CYN4QZNHB8');
-    </script>
-    <div>
-        <h1 style="text-align:center">ABSOLUTELY LEGITEMENT BRAWL STARS GEMS GENERATOR 100% 2023</h1>
-        <h3 style="text-align:center" id="s">
-            You will get 5000 gems in Brawl Stars<br> when hacking finish. Choose all parameters and press 'Submit'!
-            <!-- <br> on next page, if you confirm that you
-            <br>are not robot
-            <br>Now just wait, our best SuperSell hack system is working :c -->
-            </h2>
-    </div>
-    <label for="rang" id="lanbl" class="form-label">Choose, how many gems do you want</label>
-
-    <div class="input-group mb-3">
-        <input type="range" class="form-range" min="0" max="10000" id="rang">
-        <input type="text" id="name" style="width: 4px" class="form-control" placeholder="ID in Brawl Stars"
-            aria-label="id" aria-describedby="basic-addon1">
-        <button id="submit" type="button" class="btn btn-success btns" id="btns" onclick="run()">Submit</button>
-    </div>
-    <div style="display: flex;justify-content: center;" id="pasta">
-
-    </div>
-    <div style="position: fixed;bottom: 0;width: 100%;">
-        <h4 id="state" class="text-center">State: waiting for user input...</h4>
-        <div class="progress">
-            <div class="progress-bar" role="progressbar" style="width: 0%" id="pb" aria-valuenow="0" aria-valuemin="0"
-                aria-valuemax="100"></div>
         </div>
+        <div>
+            <div class="d-inline-block">
+                <div class="square" id="minutes"></div>
+                <div>хвилин</div>
+            </div>
+            <div class="d-inline-block">
+                <div class="square" id="seconds"></div>
+                <div>секунд</div>
+            </div>
 
-
+        </div>
     </div>
-
+    <div class="text-center">
+        <h1>Powered by Remote.NET Technologies</h1>
+    </div>
     <script>
-        var slider = document.getElementById("rang"); // Display the default slider value
+        const summerVacationDate = new Date(2023, 5, 30);
 
-        // Update the current slider value (each time you drag the slider handle)
-        slider.oninput = function () {
-            if (document.getElementById('name').value == null || document.getElementById('name').value == "") {
-                document.getElementById("s").innerHTML = document.getElementById('name').value + "You will get " + this.value + " gems in Brawl Stars<br> when hacking finish. Choose all parameters and press 'Submit'!"
-            }
-            else {
-                document.getElementById("s").innerHTML = document.getElementById('name').value + ", you will get " + this.value + " gems in Brawl Stars<br> when hacking finish. Choose all parameters and press 'Submit '!"
-            }
-        }
-        function containsSpecialChars(str) {
-            const specialChars = "1234567890";
-            const banned = "!@#$%^&*(_)=+-~/., "
-            const result = specialChars.split('').some(specialChar => {
-                if (str.includes(specialChar) && str.length > 5 && !str.includes(banned)) {
-                    return true;
-                }
+        function updateCountdown() {
+            const currentDate = new Date();
+            const timeDiff = summerVacationDate - currentDate;
+            if (timeDiff < 0) { document.getElementById("isk").innerHTML = "Є.Канікула: ✅" }
+            else { document.getElementById("isk").innerHTML = "Є.Канікула: ❌" }
+            const months = Math.floor(timeDiff / (1000 * 60 * 60 * 24 * 30.44));
+            document.getElementById('months').textContent = months;
+            const days = Math.floor(timeDiff / (1000 * 60 * 60 * 24));
+            document.getElementById('days').textContent = Math.floor(days - (months * 30.44));
 
-                return false;
-            });
+            const hours = Math.floor((timeDiff / (1000 * 60 * 60)) % 24);
+            document.getElementById('hours').textContent = hours;
 
-            return result;
-        }
-        function getRandomInt(min, max) {
-            min = Math.ceil(min);
-            max = Math.floor(max);
-            return Math.floor(Math.random() * (max - min) + min); // The maximum is exclusive and the minimum is inclusive
-        }
-        function condition() {
-            return exe >= 100
-        }
-        function waitFor(condition, callback) {
-            if (!condition()) {
-                window.setTimeout(waitFor.bind(null, condition, callback), 100); /* this checks the flag every 100 milliseconds*/
-            } else {
-                callback();
-            }
-        }
-        var exe = 0
-        var activated = false
-        function run() {
-            if (!containsSpecialChars(document.querySelector('#name').value)) {
-                return
-            }
-            if (activated) {
-                return
-            }
-            var name = document.getElementById('name').value
-            var gems = document.getElementById("rang").value
-            document.getElementById("rang").remove()
-            document.getElementById("name").disabled = true
-            activated = true
-            document.getElementById("lanbl").remove()
-            document.getElementById("s").innerHTML = name + ", you will get " + gems + " gems in Brawl Stars<br> when hacking finish. Choose all parameters and press 'Submit '!"
-            document.getElementById("state").innerHTML = "Connecting to SuperSell servers..."
-            for (var i = 0; i < 100; i++) {
-                setTimeout(function () {
-                    document.getElementById("pb").setAttribute("aria-valuenow", (parseInt(document.querySelector('#pb').getAttribute("aria-valuenow")) + 1).toString())
-                    document.getElementById("pb").setAttribute('style', 'width:' + (parseInt(document.querySelector('#pb').getAttribute("aria-valuenow")) + 1).toString() + '%')
-                    exe += 1
-                    if (exe == 30 || exe == 70) {
-                        document.getElementById("state").innerHTML += " Success..."
-                    }
+            const minutes = Math.floor((timeDiff / (1000 * 60)) % 60);
+            document.getElementById('minutes').textContent = minutes;
 
-                    if (exe == 40) {
-                        document.getElementById("state").innerHTML = "Trying to get root access..."
-                    }
-                    if (exe == 80) {
-                        document.getElementById("state").innerHTML = "Giving " + gems + " gems to " + name + "..."
-                    }
-                }, getRandomInt(i * 50, i * 200));
+            const seconds = Math.floor((timeDiff / 1000) % 60);
+            document.getElementById('seconds').textContent = seconds;
 
 
-            }
-            waitFor(condition, function () {
-                document.querySelector('#pb').remove()
-                document.querySelector('#state').innerHTML = "Connecting to account..."
-                setTimeout(function () {
-                    document.querySelector('#state').innerHTML = "Error! Press button if you are not a robot!"
-                    document.querySelector('#state').setAttribute("style", "color: red")
-                    document.querySelector("#s").innerHTML = "You will get " + gems + " gems in Brawl Stars<br> on next page, if you confirm that you<br>are not robot"
-
-                    document.getElementById("pasta").innerHTML += "<a href='/scam'><button type='button' class='btn btn-info'>HCaptcha v2.2.8</button></a>"
-                }, 100)
-            })
         }
 
-
-
-
+        setInterval(updateCountdown, 1000);
     </script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
-        integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
-        crossorigin="anonymous"></script>
 </body>
 
 </html>
