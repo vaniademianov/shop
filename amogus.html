@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Amogus</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <link href="./style.css" rel="stylesheet"> 
+</head>
+
+<body>
+    <h1 class="text-center vd">Амогус</h1>
+    <p><b>Among Us</b> (з англ. «Серед нас») — багатокористувацька відеогра на соціальну дедукцію, створена американською
+        компанією InnerSloth 15 червня 2018 року. <br><hr>Гра виконана в космічному антуражі. Гравці мають дві ролі:
+        цивільні члени екіпажу і самозванці. <br>Метою цивільних є знайти самозванців і нейтралізувати їх, а самозванців —
+        убити всіх цивільних.
+        <br>2018 року гра не отримала широкого розголосу, але у вересні 2020 завдяки Twitch, YouTube і іншим платформам вона
+        стала популярною, маючи 1,5 млн одночасних гравців. Внаслідок різкого росту інтересу, до неї було анонсовано
+        сиквел — Among Us 2.<br><i>23 вересня 2020 вихід сиквела скасували, ухваливши рішення розвивати оригінальну гру.</i> 
+        <br> Гра надихнула багатьох користувачів на написання історій, теорій, малюнків та на інші прояви творчості.</p>
+        <hr>
+        <h1 class="text-center">Гра: знайди імпостора</h1>
+        <div id="text"></div>
+        <div id="images"><img style="margin: 0;position: absolute;top: 70%;left: 50%;-ms-transform: translate(-70%, -50%);transform: translate(-70%, -50%);"
+            src="./amg.png " onclick="imp()" id="imp"></img><!--пет імп-->
+            <img style="margin: 0;position: absolute;top: 70%;left: 60%;-ms-transform: translate(-70%, -60%);transform: translate(-70%, -60%);"
+            src="./amg1.png" onclick="fail()" id="not_imp"></img> <!--жовтий-->
+            <img style="margin: 0;position: absolute;top: 90%;left: 50%;-ms-transform: translate(-90%, -50%);transform: translate(-90%, -50%);"
+            src="./amg2.png" onclick="fail()" id="not_imp2"></img><!--білий недо імп-->
+            <img style="margin: 0;position: absolute;top: 80%;left: 55%;-ms-transform: translate(-80%, -55%);transform: translate(-80%, -55%);"
+            src="./knife.png" id="knife" width="150px" height="150px" class="hide"></img>
+        </div> 
+        <script src="./script.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
+        crossorigin="anonymous"></script>
+</body>
+
+</html>
