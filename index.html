@@ -33,6 +33,30 @@
             margin: 10px;
         }
     </style>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"></script>
+    <script>
+      $(document).ready(function() {
+        setInterval(function() {
+          var now = moment();
+          var days = moment("2023-06-01").diff(now, 'days');
+          var hours = moment("2023-06-01").diff(now, 'hours') % 24;
+          var minutes = moment("2023-06-01").diff(now, 'minutes') % 60;
+          var seconds = moment("2023-06-01").diff(now, 'seconds') % 60;
+  
+          $("#days-value").html(days);
+          $("#hours-value").html(hours);
+          $("#minutes-value").html(minutes);
+          $("#seconds-value").html(seconds);
+  
+          $(".countdown-item").addClass("animate__animated animate__flipInX");
+          setTimeout(function() {
+            $(".countdown-item").removeClass("animate__animated animate__flipInX");
+          }, 1000);
+        }, 1000);
+      });
+    </script>
 </head>
 
 <body>
@@ -66,10 +90,15 @@
         </div>
     </div>
     <div class="text-center">
+        <h3>Або<div class="d-inline-block"><div class="month-square" id="lessons"><div id="les">Завантаження</div></div></div>уроків з Голуб</h3>
+
+    </div>
+    <div class="text-center">
         <h1>Powered by Remote.NET Technologies</h1>
     </div>
     <script>
         const summerVacationDate = new Date(2023, 4, 30);
+        const LESSONS_PER_WEEK = 6;
         console.log(summerVacationDate)
         function updateCountdown() {
             const currentDate = new Date();
@@ -78,6 +107,9 @@
             else { document.getElementById("isk").innerHTML = "Є.Канікула: ❌" }
             const months = Math.floor(timeDiff / (1000 * 60 * 60 * 24 * 30.44));
             document.getElementById('months').textContent = months;
+            const t = (timeDiff / (1000 * 60 * 60 * 24))/7;
+            const lessons = Math.floor(t*LESSONS_PER_WEEK);
+
             const days = Math.floor(timeDiff / (1000 * 60 * 60 * 24));
             document.getElementById('days').textContent = Math.floor(days - (months * 30.44));
 
@@ -86,7 +118,7 @@
 
             const minutes = Math.floor((timeDiff / (1000 * 60)) % 60);
             document.getElementById('minutes').textContent = minutes;
-
+            document.getElementById('les').textContent = lessons;
             const seconds = Math.floor((timeDiff / 1000) % 60);
             document.getElementById('seconds').textContent = seconds;
 
