@@ -94,11 +94,17 @@
 
     </div>
     <div class="text-center">
+        <h3>Або<div class="d-inline-block"><div class="square"><div id="losss">Завантаження</div></div></div>просто уроків</h3>
+
+    </div>
+    <div class="text-center">
         <h1>Powered by Remote.NET Technologies</h1>
     </div>
     <script>
         const summerVacationDate = new Date(2023, 4, 30);
         const LESSONS_PER_WEEK = 6;
+        const lessons_per_day = 7;
+        const dayss = 5;
         console.log(summerVacationDate)
         function updateCountdown() {
             const currentDate = new Date();
@@ -108,6 +114,9 @@
             const months = Math.floor(timeDiff / (1000 * 60 * 60 * 24 * 30.44));
             document.getElementById('months').textContent = months;
             const t = (timeDiff / (1000 * 60 * 60 * 24))/7;
+            const losss =Math.floor(t*(lessons_per_day*dayss));
+            document.getElementById('losss').textContent=losss; 
+
             const lessons = Math.floor(t*LESSONS_PER_WEEK);
 
             const days = Math.floor(timeDiff / (1000 * 60 * 60 * 24));
