@@ -62,6 +62,7 @@
 <body>
     <div class="container text-center">
         <h1 id="isk">Завантаження...</h1>
+        <h1 id="isk2"></h1>
         <div>
             <div class="d-inline-block">
                 <div class="square" id="months"></div>
@@ -101,36 +102,50 @@
         <h1>Powered by Remote.NET Technologies</h1>
     </div>
     <script>
-        const summerVacationDate = new Date(2023, 4, 30);
+        let summerVacationDate = new Date(2023, 4, 30);
+        let summerVacDate = new Date(2023, 4, 30);
         const LESSONS_PER_WEEK = 6;
         const lessons_per_day = 7;
         const dayss = 5;
-        console.log(summerVacationDate)
+        const currentDate = new Date();
+        const timeDiff = summerVacationDate - currentDate;
+        const ecanicula = (timeDiff<0);
+        if (ecanicula) {
+            const elem = document.getElementById('isk2');
+            summerVacationDate = new Date(2023, 7, 30);
+            elem.innerHTML = "Канікули закінчуться через:";
+        }
         function updateCountdown() {
+            
             const currentDate = new Date();
-            const timeDiff = summerVacationDate - currentDate;
+            let timeDiff = summerVacDate - currentDate;
+
             if (timeDiff < 0) { document.getElementById("isk").innerHTML = "Є.Канікула: ✅" }
             else { document.getElementById("isk").innerHTML = "Є.Канікула: ❌" }
+            timeDiff = summerVacationDate - currentDate;
             const months = Math.floor(timeDiff / (1000 * 60 * 60 * 24 * 30.44));
-            document.getElementById('months').textContent = months;
+
+
             const t = (timeDiff / (1000 * 60 * 60 * 24))/7;
             const losss =Math.floor(t*(lessons_per_day*dayss));
-            document.getElementById('losss').textContent=losss; 
+
 
             const lessons = Math.floor(t*LESSONS_PER_WEEK);
 
             const days = Math.floor(timeDiff / (1000 * 60 * 60 * 24));
-            document.getElementById('days').textContent = Math.floor(days - (months * 30.44));
+
 
             const hours = Math.floor((timeDiff / (1000 * 60 * 60)) % 24);
-            document.getElementById('hours').textContent = hours;
 
             const minutes = Math.floor((timeDiff / (1000 * 60)) % 60);
-            document.getElementById('minutes').textContent = minutes;
-            document.getElementById('les').textContent = lessons;
             const seconds = Math.floor((timeDiff / 1000) % 60);
             document.getElementById('seconds').textContent = seconds;
-
+            document.getElementById('months').textContent = months;
+            document.getElementById('minutes').textContent = minutes;
+            document.getElementById('les').textContent = lessons;
+            document.getElementById('hours').textContent = hours;
+            document.getElementById('losss').textContent=losss; 
+            document.getElementById('days').textContent = Math.floor(days - (months * 30.44));
 
         }
 
