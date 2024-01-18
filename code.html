@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Кількість уроків до 01.06.2024</title>
+	<script>
+		function getLessonCount() {
+			var count = 0;
+			var date = new Date();
+			var targetDate = new Date("June 1, 2024");
+			while (date < targetDate) {
+				if (date.getDay() != 0 && date.getDay() != 2 && date.getDay() != 6) {
+					count += 7;
+				} else if (date.getDay() == 2) {
+					count += 8;
+				}
+				date.setDate(date.getDate() + 1);
+			}
+			return count;
+		}
+	</script>
+</head>
+<body>
+	<h1>Кількість уроків до 01.06.2024: <span id="lessonCount"></span></h1>
+	<script>
+		document.getElementById("lessonCount").innerHTML = getLessonCount();
+	</script>
+</body>
+</html>
