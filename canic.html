@@ -1,0 +1,212 @@
+<!-- <!DOCTYPE html>
+<html>
+<head>
+	<title>Кількість уроків до 01.06.2024</title>
+	<script>
+		function getLessonCount() {
+			var count = 0;
+			var date = new Date();
+			var targetDate = new Date("June 1, 2024");
+			while (date < targetDate) {
+				if (date.getDay() != 0 && date.getDay() != 2 && date.getDay() != 6) {
+					count += 7;
+				} else if (date.getDay() == 2) {
+					count += 8;
+				}
+				date.setDate(date.getDate() + 1);
+			}
+			return count;
+		}
+	</script>
+</head>
+<body>
+	<h1>Кількість уроків до 01.06.2024: <span id="lessonCount"></span></h1>
+	<script>
+		document.getElementById("lessonCount").innerHTML = getLessonCount();
+	</script>
+</body>
+</html> -->
+
+
+
+<!DOCTYPE html>
+<html lang="uk">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" href="favicon.ico" type="image/x-icon">
+    <meta name="description" content="Want to know exactly when nearest vacation will be? Check out this site!">
+    <meta name="author" content="Remote.NET Technologies Inc.">
+    <meta name="keywords" content="vacation, summer vacation, remotenet, remotenettechnologies, ukraine, canicula, ecanicula">
+    <title>Канікули</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+    <style>
+        .square {
+            display: inline-block;
+            width: 150px;
+            height: 100px;
+            background-color: black;
+            color: white;
+            text-align: center;
+            font-size: 3rem;
+            line-height: 100px;
+            border-radius: 10px;
+            margin: 10px;
+        }
+
+        .month-square {
+            display: inline-block;
+            width: 210px;
+            height: 210px;
+            background-color: black;
+            color: white;
+            text-align: center;
+            font-size: 5rem;
+            line-height: 210px;
+            border-radius: 50%;
+            margin: 10px;
+        }
+    </style>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"></script>
+    <script>
+      $(document).ready(function() {
+        setInterval(function() {
+          var now = moment();
+          var days = moment("2024-06-01").diff(now, 'days');
+          var hours = moment("2024-06-01").diff(now, 'hours') % 24;
+          var minutes = moment("2024-06-01").diff(now, 'minutes') % 60;
+          var seconds = moment("2024-06-01").diff(now, 'seconds');
+  
+          $("#days-value").html(days);
+          $("#hours-value").html(hours);
+          $("#minutes-value").html(minutes);
+          $("#seconds-value").html(seconds);
+  
+          $(".countdown-item").addClass("animate__animated animate__flipInX");
+          setTimeout(function() {
+            $(".countdown-item").removeClass("animate__animated animate__flipInX");
+          }, 1000);
+        }, 1000);
+      });
+    </script>
+</head>
+
+<body>
+    <div class="container text-center">
+        <h1 id="isk">Завантаження...</h1>
+        <h1 id="isk2"></h1>
+        <div>
+            <div class="d-inline-block">
+                <div class="square" id="seconds"></div>
+                <div>годин уроків</div>
+            </div>
+
+
+        </div>
+    </div>
+    <div class="text-center">
+        <h3>Або<div class="d-inline-block"><div class="month-square" id="lessons"><div id="les">Завантаження</div></div></div>уроків з Світланою Дмитренко</h3>
+
+    </div>
+    <div class="text-center">
+        <h3>Або<div class="d-inline-block"><div class="square"><div id="losss">Завантаження</div></div></div>просто уроків</h3>
+
+    </div>
+    <div class="text-center">
+        <h1>Powered by Яся</h1>
+    </div>
+    <!-- <audio controls autoplay loop id="mus">
+        <source src="https://vaniademianov.github.io/music.mp3" type="audio/mpeg">
+        <embed src="https://vaniademianov.github.io/music.mp3" autostart="true" loop="true" hidden="true"> 
+      </audio> -->
+    <script>
+        function nFormatter(num) {
+            if (num >= 1000000000) {
+                return (num / 1000000000).toFixed(1).replace(/\.0$/, '') + 'G';
+            }
+            if (num >= 1000000) {
+                return (num / 1000000).toFixed(1).replace(/\.0$/, '') + 'M';
+            }
+            if (num >= 1000) {
+                return (num / 1000).toFixed(1).replace(/\.0$/, '') + 'K';
+            }
+            return num;
+        }
+        let summerVacationDate = new Date(2024, 4, 30);
+        let summerVacDate = new Date(2024, 4, 30);
+        const LESSONS_PER_WEEK = 5;
+        const lessons_per_day = 7.6;
+        const dayss = 5;
+        const currentDate = new Date();
+        const timeDiff = summerVacationDate - currentDate;
+        const ecanicula = (timeDiff<0);
+        if (ecanicula) {
+            const elem = document.getElementById('isk2');
+            summerVacationDate = new Date(2024, 7, 30);
+            elem.innerHTML = "Канікули закінчуться через:";
+        }
+        function updateCountdown() {
+            
+            const currentDate = new Date();
+            let timeDiff = summerVacDate - currentDate;
+
+            if (timeDiff < 0) { document.getElementById("isk").innerHTML = "Є.Канікула: ✅" }
+            else { document.getElementById("isk").innerHTML = "Є.Канікула: ❌" }
+            timeDiff = summerVacationDate - currentDate;
+            const months = Math.floor(timeDiff / (1000 * 60 * 60 * 24 * 30.44));
+
+
+            const t = (timeDiff / (1000 * 60 * 60 * 24))/7;
+            const losss =Math.floor(t*(lessons_per_day*dayss));
+
+
+            const lessons = Math.floor(t*LESSONS_PER_WEEK);
+
+            const days = Math.floor(timeDiff / (1000 * 60 * 60 * 24));
+
+
+            const hours = Math.floor((timeDiff / (1000 * 60 * 60)) % 24);
+
+            const minutes = Math.floor((timeDiff / (1000 * 60)) % 60);
+            const seconds = Math.floor(timeDiff);
+            document.getElementById('seconds').textContent = nFormatter(Math.floor(lessons*40));
+            // document.getElementById('months').textContent = months;
+            // document.getElementById('minutes').textContent = minutes;
+            document.getElementById('les').textContent = "хз";
+            // document.getElementById('hours').textContent = hours;
+            document.getElementById('losss').textContent=losss; 
+            // document.getElementById('days').textContent = Math.floor(days - (months * 30.44));
+            
+        }
+
+        setInterval(updateCountdown, 1000);
+
+
+        const audio = new Audio('https://vaniademianov.github.io/music.mp3');
+        // const playButton = document.getElementById('playButton'); // Replace 'playButton' with the actual ID of your element
+        audio.loop = true;
+        function playAudio() {
+            const promise = audio.play();
+
+            if (promise !== undefined) {
+                promise.then(() => {
+                    // Autoplay started
+                    // Remove the event listener after the audio starts playing
+                    document.removeEventListener('click', playAudio);
+                }).catch(error => {
+                    // Autoplay was prevented.
+                    console.log(error);
+                    // You may want to provide a UI element to let the user manually start the audio.
+                });
+            }
+        }
+
+        document.addEventListener('click', playAudio);
+
+    </script>
+</body>
+
+</html>
