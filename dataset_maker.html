@@ -53,6 +53,9 @@
             display: inline-block;
             animation: slideIn 1s ease;
         }
+        #currentColor:hover, #predictedColor:hover, #hoveredColor:hover {
+            transform: scale(1.1);
+        }
 
         #predictedColor,
         #hoveredColor {
@@ -237,10 +240,22 @@
                 }
             statusBar.innerText = "Model trained!";
         }
-        function preDictTator(color) {
+        async function preDictTator(color) {
             if (clf) {
-                const prediction = clf.predict([[color[0], color[1], color[2]]]);
-                return prediction
+                const prediction = clf.predictProba([[color[0], color[1], color[2]]]);
+                let pred = await prediction.array();
+                console.log(pred);
+                pred = pred[0];
+                let maxKey, maxValue = 0;
+
+                for(const [key, value] of Object.entries(pred)) {
+                if(value < maxValue) {
+                    maxValue = value;
+                    maxKey = key;
+                }
+                }
+                console.log(maxKey, maxValue)
+                return maxKey
 
             }
             else {
@@ -272,6 +287,23 @@
                 dataset = rows.map(row => row.split(',').map(Number));
                 console.log(dataset);
                 statusBar.innerText = "Dataset loaded!";
+                for (let i = 0; i < dataset.length; i++) {
+                    let color = dataset[i];
+                    // set color to its first 3 elements
+                    color = [color[0], color[1], color[2], 255];
+                    console.log(color);
+                    console.log(lst)
+                    for (let j = 0; j < lst.length; j++) {
+                        if (color[0] == lst[j][0] && color[1] == lst[j][1] && color[2] == lst[j][2]) {
+                            let v = lst.pop(j);
+                            console.log("Optimized: " + v);
+                            break;
+
+                        }
+                    }
+
+                
+                }
             }
         }
         function Regenerate() {
@@ -329,7 +361,7 @@
         };
 
         // Function to handle color click event
-        function colorClicked(event) {
+        async function colorClicked(event) {
             const color = JSON.parse(event.target.dataset.color);
             const times_clicked = parseInt(localStorage.getItem("times_clicked")) || 0;
 
@@ -339,12 +371,13 @@
 
             CURRENT_COLOR = lst[Math.floor(Math.random() * lst.length)];
             lst.pop(lst.indexOf(CURRENT_COLOR));
-            let pred = preDictTator(CURRENT_COLOR);
+            let pred = await preDictTator(CURRENT_COLOR);
             if (CURRENT_INDX >= lst.length) {
                 statusBar.innerText = "DONE!!!!";
             }
             else {
                 statusBar.innerText = "Ready to work! Left to click: " + (lst.length);
+                console.log(pred);
                 currentColor.style.backgroundColor = `rgba(${CURRENT_COLOR.join(",")})`;
                 predictedColor.style.backgroundColor = `rgba(${PALLETE[pred].join(",")})`;
                 predictedColor.dataset.color = JSON.stringify(PALLETE[pred]);
