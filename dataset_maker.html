@@ -379,6 +379,7 @@
         function createColorPalette() {
             const colorPaletteDiv = document.getElementById("colorPalette");
             let i = 0;
+            let c;
             for (const color of Object.values(PALLETE)) {
 
                 const div = document.createElement("div");
@@ -388,6 +389,7 @@
                 div.addEventListener("click", colorClicked);
                 div.addEventListener("mouseenter", hovered);
                 colorPaletteDiv.appendChild(div);
+                let c = color; 
                 i++;
             }
             
@@ -397,7 +399,7 @@
             hoveredColor.dataset.color_class = JSON.stringify(0);
             predictedColor.addEventListener("click", colorClicked);
             hoveredColor.addEventListener("click", colorClicked);
-            colorClicked({target: color})
+            colorClicked({ target: predictedColor});
         }
 
         // Function to initialize the application
@@ -413,7 +415,6 @@
         trainButton.addEventListener("click", trainModel);
         clearButton.addEventListener("click", clearDataset);
         importDataset.addEventListener("change", loadDataset)
-        
     </script>
 </body>
 
