@@ -390,12 +390,14 @@
                 colorPaletteDiv.appendChild(div);
                 i++;
             }
+            
             predictedColor.dataset.color = JSON.stringify(predictNEW(CURRENT_COLOR));
             hoveredColor.dataset.color = JSON.stringify(CURRENT_COLOR);
             predictedColor.dataset.color_class = JSON.stringify(0);
             hoveredColor.dataset.color_class = JSON.stringify(0);
             predictedColor.addEventListener("click", colorClicked);
             hoveredColor.addEventListener("click", colorClicked);
+            colorClicked({target: color})
         }
 
         // Function to initialize the application
@@ -411,6 +413,7 @@
         trainButton.addEventListener("click", trainModel);
         clearButton.addEventListener("click", clearDataset);
         importDataset.addEventListener("change", loadDataset)
+        
     </script>
 </body>
 
