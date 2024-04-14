@@ -1,0 +1,417 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dataset Maker v69</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto+Condensed:ital,wght@0,100..900;1,100..900&display=swap"
+        rel="stylesheet">
+    <style>
+        /* CSS for Color Palette */
+        body {
+            background-color: #555;
+            font-family: 'Roboto Condensed', sans-serif;
+            /* Applying custom font */
+        }
+
+        #colorPalette {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(50px, 1fr));
+            gap: 5px;
+            animation: fadeIn 1s ease;
+        }
+
+        #colorPalette div {
+            width: 100px;
+            height: 100px;
+            border: 2px solid #fff;
+            cursor: pointer;
+            animation: scaleIn 0.5s ease;
+        }
+
+        #colorPalette div:hover {
+            transform: scale(1.1);
+        }
+
+        /* CSS for Color Display Boxes */
+        .colorDisplay {
+            width: 100px;
+            height: 100px;
+            margin-top: 20px;
+            border: 2px solid #000;
+            animation: slideIn 1s ease;
+        }
+
+        #currentColor,
+        #predictedColor,
+        #hoveredColor {
+            width: 100%;
+            height: 400px;
+            display: inline-block;
+            animation: slideIn 1s ease;
+        }
+
+        #predictedColor,
+        #hoveredColor {
+            width: 49.6% !important;
+        }
+
+        /* CSS for Buttons */
+        #buttons {
+            margin-top: 20px;
+            animation: fadeIn 1s ease;
+        }
+
+        #status {
+            margin-top: 20px;
+            padding: 10px;
+            background-color: #333;
+            color: white;
+            text-align: center;
+            font-size: 32px;
+            font-family: 'Roboto Condensed', sans-serif;
+        }
+
+        button {
+            padding: 10px 20px;
+            margin-right: 10px;
+            font-size: 16px;
+            cursor: pointer;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            animation: slideIn 1s ease;
+        }
+
+        button:hover {
+            background-color: #45a049;
+        }
+
+        /* CSS for Step input */
+        #stepInputContainer {
+            display: flex;
+            align-items: center;
+            margin-top: 20px;
+            font-size: 16px;
+            animation: slideIn 1s ease;
+        }
+
+        #stepInputLabel {
+            margin-right: 10px;
+            font-weight: bold;
+        }
+
+        #stepInput {
+            padding: 8px;
+            border: 2px solid #4CAF50;
+            border-radius: 4px;
+            width: 50px;
+            text-align: center;
+            animation: fadeIn 1s ease;
+        }
+
+        /* Animations */
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+            }
+
+            to {
+                opacity: 1;
+            }
+        }
+
+        @keyframes slideIn {
+            from {
+                transform: translateY(-50px);
+            }
+
+            to {
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes scaleIn {
+            from {
+                transform: scale(0);
+            }
+
+            to {
+                transform: scale(1);
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <div id="root">
+        <!-- Color Palette Display -->
+        <div id="colorPalette"></div>
+        <!-- Status display  -->
+        <h3 id="status">Loading AI framework....</h3>
+        <!-- Current Color Display -->
+        <div id="currentColor" class="colorDisplay"></div>
+        <!-- Predicted Color Display -->
+        <div id="predictedColor" class="colorDisplay"></div>
+        <!-- Hovered Color Display -->
+        <div id="hoveredColor" class="colorDisplay"></div>
+        <!-- Buttons -->
+        <div id="buttons">
+            <button id="downloadDataset">Download Dataset</button>
+            <button id="trainModel">Train Model</button>
+            <button id="regen">Regenerate Colors</button>
+            <!-- Clear button -->
+            <button id="clear">Clear Dataset</button>
+            <!-- import dataset -->
+            <input type="file" id="importDataset">
+        </div>
+        <!-- Step input -->
+        <div id="stepInputContainer">
+            <label for="stepInput" id="stepInputLabel">STEP:</label>
+            <input type="number" id="stepInput" min="1" value="17">
+        </div>
+    </div>
+
+    <script type="module">
+        const statusBar = document.getElementById("status");
+        const regenButton = document.getElementById("regen");
+        const importDataset = document.getElementById("importDataset");
+        const trainButton = document.getElementById("trainModel");
+        const currentColor = document.getElementById("currentColor");
+        const hoveredColor = document.getElementById("hoveredColor");
+        const clearButton = document.getElementById("clear");
+        const predictedColor = document.getElementById("predictedColor");
+        const downloadButton = document.getElementById("downloadDataset");
+        const root = document.getElementById("root");
+
+    
+
+        // Importing libs, following datasheet
+        import * as tf from 'https://cdn.skypack.dev/@tensorflow/tfjs'
+        // import {setBackend, trainTestSplit} from 'https://cdn.skypack.dev/scikitjs'
+        import * as sk from 'https://cdn.skypack.dev/scikitjs'
+    
+        sk.setBackend(tf)
+        // import * as csv from 'https://cdn.skypack.dev/csv';
+        statusBar.innerText = "Initializing palette...";
+        // Define global variables
+        let lst = [];
+        let dataset = [];
+        let clf = null;
+        function findClosestColorIndex(color, palette) {
+            // Convert color to Float32Array for efficient computation
+            color = Float32Array.from(color);
+            
+            // Calculate Euclidean distances between the given color and colors in the palette
+            const distances = Object.values(palette).map(paletteColor => Math.sqrt(
+                color.reduce((acc, cur, index) => acc + Math.pow(cur - paletteColor[index], 2), 0)
+            ));
+            
+            // Find the index of the closest color
+            const closestIndex = distances.indexOf(Math.min(...distances));
+            
+            return closestIndex;
+        }
+
+        async function trainModel() {
+            statusBar.innerText = "Formatting data...";
+            const features = dataset.map(row => row.slice(0, 3));
+            const target = dataset.map(row => row[3]);
+
+            // Split the dataset into training and testing sets
+            const [x_train, x_test, y_train, y_test] = sk.trainTestSplit(features, target, 0.15);
+            const y_train_numbers = y_train.map(Number);
+            const y_test_numbers = y_test.map(Number);
+            console.log(sk.LinearSVC);
+            clf = new sk.LinearSVC();
+            statusBar.innerText = "Training model...";
+
+                for (let i = 0; i < 150; i++) {
+                    statusBar.innerText = "Training model (" + i + " / " + 150 + ")...";
+                    await clf.fit(x_train, y_train_numbers);
+                }
+            statusBar.innerText = "Model trained!";
+        }
+        function preDictTator(color) {
+            if (clf) {
+                const prediction = clf.predict([[color[0], color[1], color[2]]]);
+                return prediction
+
+            }
+            else {
+                const prediction = findClosestColorIndex(color, PALLETE);
+                return prediction
+
+            }
+        }
+        function loadDataset(event) {
+            statusBar.innerText = "Loading dataset...";
+            const file = event.target.files[0];
+            if (!file) {
+                return;
+            }
+            const reader = new FileReader();
+            reader.readAsText(file);
+            console.log("loading dataset");
+            reader.onerror = function () {
+                statusBar.innerText = "Error loading dataset";
+            }
+            reader.onloadstart = function () {
+                statusBar.innerText = "Loading dataset file...";
+            }
+            reader.onload = function (event) {
+                const csv = event.target.result;
+                const rows = csv.split('\n');
+                // first row is the header
+                rows.shift();
+                dataset = rows.map(row => row.split(',').map(Number));
+                console.log(dataset);
+                statusBar.innerText = "Dataset loaded!";
+            }
+        }
+        function Regenerate() {
+            statusBar.innerText = "Regenerating palette...";
+            lst = [];
+            let step = parseInt(document.getElementById("stepInput").value);
+            console.log(step);
+
+
+            for (let r = 0; r <= 255; r += step) {
+                for (let g = 0; g <= 255; g += step) {
+                    for (let b = 0; b <= 255; b += step) {
+                        lst.push([r, g, b, 255]);
+                    }
+                }
+            }
+            statusBar.innerText = "Ready to work!";
+        }
+        function downloadDataset() {
+            statusBar.innerText = "Downloading dataset...";
+            const datasetWithHeader = [["r","g","b","class"]].concat(dataset);
+            const csv = datasetWithHeader.map(row => row.join(',')).join('\n');
+            const blob = new Blob([csv], { type: 'text/csv' });
+            const url = URL.createObjectURL(blob);
+            const link = document.createElement('a');
+            link.setAttribute('href', 'data:text/plain;charset=utf-8,' + encodeURIComponent(csv));
+            link.setAttribute('download', 'dataset.csv');
+            link.style.display = 'none';
+            link.click();
+            statusBar.innerText = "Ready to work!";
+
+        }
+        Regenerate();
+        let CURRENT_COLOR = [0, 0, 0, 255];
+        let CURRENT_INDX = 0;
+        const PALLETE = {
+            0: [0, 0, 0, 255],
+            1: [105, 105, 105, 255],
+            2: [85, 85, 85, 255],
+            3: [128, 128, 128, 255],
+            4: [211, 211, 211, 255],
+            5: [255, 255, 255, 255],
+            6: [255, 153, 153, 255],
+            7: [204, 51, 51, 255],
+            8: [220, 20, 60, 255],
+            9: [153, 0, 0, 255],
+            10: [128, 0, 0, 255],
+            11: [255, 87, 0, 255],
+            12: [204, 255, 140, 255],
+            13: [129, 222, 118, 255],
+            14: [0, 111, 60, 255],
+            15: [58, 85, 180, 255],
+            16: [108, 173, 223, 255],
+            17: [140, 217, 255, 255]
+        };
+
+        // Function to handle color click event
+        function colorClicked(event) {
+            const color = JSON.parse(event.target.dataset.color);
+            const times_clicked = parseInt(localStorage.getItem("times_clicked")) || 0;
+
+            localStorage.setItem("times_clicked", parseInt(times_clicked) + 1);
+
+            dataset.push([CURRENT_COLOR[0], CURRENT_COLOR[1], CURRENT_COLOR[2], event.target.dataset.color_class]);
+
+            CURRENT_COLOR = lst[Math.floor(Math.random() * lst.length)];
+            lst.pop(lst.indexOf(CURRENT_COLOR));
+            let pred = preDictTator(CURRENT_COLOR);
+            if (CURRENT_INDX >= lst.length) {
+                statusBar.innerText = "DONE!!!!";
+            }
+            else {
+                statusBar.innerText = "Ready to work! Clicked: " + times_clicked + " / " + (times_clicked + lst.length);
+                currentColor.style.backgroundColor = `rgba(${CURRENT_COLOR.join(",")})`;
+                predictedColor.style.backgroundColor = `rgba(${PALLETE[pred].join(",")})`;
+                predictedColor.dataset.color = JSON.stringify(PALLETE[pred]);
+                predictedColor.dataset.color_class = JSON.stringify(pred);
+                // add to dataset
+                
+                // document.getElementById("predictedColorText").innerText = JSON.stringify(predictedColor);
+                
+            }
+
+        }
+
+        // Function to handle hover event
+        function hovered(event) {
+            const color = JSON.parse(event.target.dataset.color);
+            hoveredColor.style.backgroundColor = `rgba(${color.join(",")})`;
+            hoveredColor.dataset.color = JSON.stringify(color);
+            hoveredColor.dataset.color_class = event.target.dataset.color_class;
+            console.log(color)
+        }
+
+        // Function to predict the closest color
+        function predictNEW(color) {
+            // predict using find_closest_color
+            // Implement your prediction logic here
+            return color;
+        }
+        function clearDataset() {
+            dataset = [];
+        }
+        // Function to create color palette
+        function createColorPalette() {
+            const colorPaletteDiv = document.getElementById("colorPalette");
+            let i = 0;
+            for (const color of Object.values(PALLETE)) {
+
+                const div = document.createElement("div");
+                div.style.backgroundColor = `rgba(${color.join(",")})`;
+                div.dataset.color = JSON.stringify(color);
+                div.dataset.color_class = JSON.stringify(i);
+                div.addEventListener("click", colorClicked);
+                div.addEventListener("mouseenter", hovered);
+                colorPaletteDiv.appendChild(div);
+                i++;
+            }
+            predictedColor.dataset.color = JSON.stringify(predictNEW(CURRENT_COLOR));
+            hoveredColor.dataset.color = JSON.stringify(CURRENT_COLOR);
+            predictedColor.dataset.color_class = JSON.stringify(0);
+            hoveredColor.dataset.color_class = JSON.stringify(0);
+            predictedColor.addEventListener("click", colorClicked);
+            hoveredColor.addEventListener("click", colorClicked);
+        }
+
+        // Function to initialize the application
+        function initialize() {
+            createColorPalette();
+            document.getElementById("status").innerText = "Ready to work!";
+        }
+
+        // Call initialize function when the DOM is ready
+        document.addEventListener("DOMContentLoaded", initialize);
+        regenButton.addEventListener("click", Regenerate);
+        downloadButton.addEventListener("click", downloadDataset);
+        trainButton.addEventListener("click", trainModel);
+        clearButton.addEventListener("click", clearDataset);
+        importDataset.addEventListener("change", loadDataset)
+    </script>
+</body>
+
+</html>
