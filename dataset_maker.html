@@ -200,9 +200,9 @@
         // import * as csv from 'https://cdn.skypack.dev/csv';
         statusBar.innerText = "Initializing palette...";
         // Define global variables
-        let lst = [];
-        let dataset = [];
-        let clf = null;
+        var lst = [];
+        var dataset = [];
+        var clf = null;
         function findClosestColorIndex(color, palette) {
             // Convert color to Float32Array for efficient computation
             color = Float32Array.from(color);
@@ -231,8 +231,8 @@
             clf = new sk.LinearSVC();
             statusBar.innerText = "Training model...";
 
-                for (let i = 0; i < 150; i++) {
-                    statusBar.innerText = "Training model (" + i + " / " + 150 + ")...";
+                for (let i = 0; i < 50; i++) {
+                    statusBar.innerText = "Training model (" + i + " / " + 50 + ")...";
                     await clf.fit(x_train, y_train_numbers);
                 }
             statusBar.innerText = "Model trained!";
@@ -305,8 +305,8 @@
 
         }
         Regenerate();
-        let CURRENT_COLOR = [0, 0, 0, 255];
-        let CURRENT_INDX = 0;
+        var CURRENT_COLOR = [0, 0, 0, 255];
+        var CURRENT_INDX = 0;
         const PALLETE = {
             0: [0, 0, 0, 255],
             1: [105, 105, 105, 255],
@@ -344,7 +344,7 @@
                 statusBar.innerText = "DONE!!!!";
             }
             else {
-                statusBar.innerText = "Ready to work! Clicked: " + times_clicked + " / " + (times_clicked + lst.length);
+                statusBar.innerText = "Ready to work! Left to click: " + (lst.length);
                 currentColor.style.backgroundColor = `rgba(${CURRENT_COLOR.join(",")})`;
                 predictedColor.style.backgroundColor = `rgba(${PALLETE[pred].join(",")})`;
                 predictedColor.dataset.color = JSON.stringify(PALLETE[pred]);
@@ -399,6 +399,8 @@
             hoveredColor.dataset.color_class = JSON.stringify(0);
             predictedColor.addEventListener("click", colorClicked);
             hoveredColor.addEventListener("click", colorClicked);
+            predictedColor.addEventListener("mouseenter", hovered);
+            hoveredColor.addEventListener("mouseenter", hovered);
             colorClicked({ target: predictedColor});
         }
 
